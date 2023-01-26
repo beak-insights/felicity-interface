@@ -63,5 +63,8 @@ https://github.com/hitgeek/simple-hl7
 https://github.com/Loksly/nodehl7
 https://github.com/RedoxEngine/redox-hl7-v2
 
+https://github.com/DaveAldon/HL7-Javascript-Parsing
+https://davealdon.github.io/HL7-Javascript-Parsing/
+
 
 

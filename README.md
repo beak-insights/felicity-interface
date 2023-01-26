@@ -68,8 +68,14 @@ https://davealdon.github.io/HL7-Javascript-Parsing/
 
 https://github.com/iShafayet/node-astm
 
+https://github.com/node-usb/node-usb
 https://node-usb.github.io/node-usb/
 https://github.com/serialport/node-serialport
+https://github.com/yaacov/node-modbus-serial
+https://github.com/xianyanbu/serialport
+https://github.com/RIAEvangelist/serialport-js
+https://github.com/monteslu/mqtt-serial
+
 
 
 

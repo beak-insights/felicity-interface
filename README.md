@@ -77,5 +77,8 @@ https://github.com/RIAEvangelist/serialport-js
 https://github.com/monteslu/mqtt-serial
 
 
+https://devtut.github.io/nodejs/tcp-sockets.html#a-simple-tcp-server
+https://github.com/yaacov/node-modbus-serial
+https://github.com/Cloud-Automation/node-modbus#readme
 
 

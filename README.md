@@ -54,5 +54,14 @@ https://github.com/AreebaAroosh/LISMessageProcessor
 
 https://github.com/deforay/vlsm-interfacing
 
+https://github.com/ironbridgecorp/hl7-standard
+https://github.com/douglasdoughty/HL7Parser
+https://github.com/artifacthealth/hl7parser
+https://github.com/amida-tech/hl7
+https://github.com/MatthewVita/node-hl7-complete
+https://github.com/hitgeek/simple-hl7
+https://github.com/Loksly/nodehl7
+https://github.com/RedoxEngine/redox-hl7-v2
+
 
 

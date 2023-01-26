@@ -66,5 +66,8 @@ https://github.com/RedoxEngine/redox-hl7-v2
 https://github.com/DaveAldon/HL7-Javascript-Parsing
 https://davealdon.github.io/HL7-Javascript-Parsing/
 
+https://node-usb.github.io/node-usb/
+https://github.com/serialport/node-serialport
+
 
 

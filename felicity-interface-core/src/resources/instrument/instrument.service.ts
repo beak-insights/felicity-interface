@@ -1,15 +1,19 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { CreateInstrumentDto } from './dto/create-instrument.dto';
 import { UpdateInstrumentDto } from './dto/update-instrument.dto';
-import { Repository, UpdateResult } from 'typeorm';
+import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Instrument } from './entities/instrument.entity';
+import { InstrumentConnectionService } from './instrument.connection';
+import { timeStamp } from 'console';
 
 @Injectable()
 export class InstrumentService {
   constructor(
     @InjectRepository(Instrument)
     private instrumentRepository: Repository<Instrument>,
+    @Inject(forwardRef(() => InstrumentConnectionService))
+    private instrumentConnection: InstrumentConnectionService,
   ) {}
 
   async create(instrumentDto: CreateInstrumentDto): Promise<Instrument> {
@@ -37,6 +41,17 @@ export class InstrumentService {
   }
 
   async delete(id: string) {
+    await this.removeConnection(id);
     return await this.instrumentRepository.delete(id);
+  }
+
+  async addConnection(id: string) {
+    const instrument = await this.findOne(id);
+    this.instrumentConnection.addSessions(instrument);
+  }
+
+  async removeConnection(id: string) {
+    const instrument = await this.findOne(id);
+    this.instrumentConnection.removeSessions(instrument);
   }
 }

@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@ant-design/icons-vue": "^6.1.0",
+    "@kyvg/vue3-notification": "^2.8.0",
     "@nuxt/image": "^0.7.1",
     "@nuxtjs/tailwindcss": "^6.3.0",
     "@pinia/nuxt": "^0.4.6",

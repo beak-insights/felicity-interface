@@ -21,12 +21,12 @@ const formState: UnwrapRef<FormState> = reactive({
   form: {
     name: "",
     code: "",
-    protocol: "hl7",
-    client: true,
-    clientPort: undefined,
-    clientHost: "",
-    server: false,
-    serverPort: undefined,
+    protocol: "astm",
+    isClient: true,
+    port: undefined,
+    host: "",
+    path:"/dev/tty/USB0",
+    baudRate: 9600,
     autoReconnect: true,
     connectionType: "tcpip",
     ...(instrument.value ?? {}),
@@ -47,7 +47,25 @@ watch(
 const handleOk = async () => {
   confirmLoading.value = true;
   let url = `${BACKEND_API}/instrument`;
-  let options = { method: "POST", body: formState.form } as any;
+  let formData = formState.form;
+  if(formData.connectionType === "tcpip") {
+    formData = remove_propeties(formData, [
+      "path",
+      "baudRate",
+    ])
+  }
+  if(formData.connectionType === "serial") {
+    formData = remove_propeties(formData, [
+      "port",
+      "host",
+    ])
+  }
+  formData = remove_propeties(formData, [
+    "connecting",
+    "connected",
+    "message",
+  ])
+  let options = { method: "POST", body: formData } as any;
   if (instrument.value?.id) {
     url += `/${instrument.value?.id}`;
     options["method"] = "PATCH";
@@ -82,31 +100,32 @@ const handleOk = async () => {
       <a-form-item label="Connection">
         <a-radio-group v-model:value="formState.form.connectionType">
           <a-radio value="tcpip" name="type">TCPIP</a-radio>
-          <a-radio value="astm" name="type">Serial ASTM</a-radio>
+          <a-radio value="serial" name="type">Serial</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item label="Protocol">
+
+      <a-form-item label="Protocol" >
         <a-radio-group v-model:value="formState.form.protocol">
-          <a-radio value="hl7" name="type">Hl7</a-radio>
-          <a-radio value="astm" name="type">Serial ASTM</a-radio>
+          <a-radio value="hl7" name="type" v-show="formState.form.connectionType === 'tcpip'">Hl7</a-radio>
+          <a-radio value="astm" name="type">ASTM</a-radio>
         </a-radio-group>
       </a-form-item>
 
-      <a-form-item label="Is Client">
-        <a-switch v-model:checked="formState.form.client" />
+      <a-form-item label="Is Client" v-show="formState.form.connectionType === 'tcpip'">
+        <a-switch v-model:checked="formState.form.isClient" checked-children="client" un-checked-children="server" />
       </a-form-item>
-      <a-form-item label="Client Host">
-        <a-input v-model:value="formState.form.clientHost" />
+      <a-form-item label="TCP IP Host" v-show="formState.form.connectionType === 'tcpip'">
+        <a-input v-model:value="formState.form.host" />
       </a-form-item>
-      <a-form-item label="Client Port">
-        <a-input type="number" v-model:value="formState.form.clientPort" />
+      <a-form-item label="TCP IP Port" v-show="formState.form.connectionType === 'tcpip'">
+        <a-input type="number" v-model:value="formState.form.port" />
       </a-form-item>
 
-      <a-form-item label="Is Server">
-        <a-switch v-model:checked="formState.form.server" />
+      <a-form-item label="Serial Path" v-show="formState.form.connectionType === 'serial'">
+        <a-input v-model:value="formState.form.path" />
       </a-form-item>
-      <a-form-item label="Client Port">
-        <a-input type="number" v-model:Server="formState.form.serverPort" />
+      <a-form-item label="Serial Baud Rate" v-show="formState.form.connectionType === 'serial'">
+        <a-input type="number" v-model:value="formState.form.baudRate" />
       </a-form-item>
 
       <a-form-item label="Auto reconnect">

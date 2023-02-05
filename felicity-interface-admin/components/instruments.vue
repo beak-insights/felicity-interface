@@ -2,11 +2,35 @@
 import { SmileOutlined } from "@ant-design/icons-vue";
 import { IInstrument } from "~~/models/instrument";
 import { useInstrumentStore } from "~~/store/instrument";
-const { setInstrument } = useInstrumentComposable();
+import { io } from "socket.io-client";
+import { BACKEND_WS } from "~~/utils/constants";
+import { useNotification } from '@kyvg/vue3-notification';
 
+const { notify } = useNotification()
+
+const socket = io(`${BACKEND_WS}/instrument`);
+const { setInstrument } = useInstrumentComposable();
 const instrumentStore = useInstrumentStore();
 
+socket.on("session", (payload) => {
+  console.log("session: ", payload);
+  if(payload["message"]){
+    notify({
+      title: "Notification",
+      text: payload["message"],
+      type: 'warn',
+    });
+  }
+
+  instrumentStore.addOrUpdate(payload);
+});
+
 const columns = [
+  {
+    name: "#ID",
+    dataIndex: "id",
+    key: "id",
+  },
   {
     name: "Name",
     dataIndex: "name",
@@ -18,24 +42,12 @@ const columns = [
     key: "code",
   },
   {
-    title: "Connection Type",
-    dataIndex: "connectionType",
-    key: "connectionType",
+    title: "Connection Summary",
+    key: "summary",
   },
   {
-    title: "Protocol",
-    key: "protocol",
-    dataIndex: "protocol",
-  },
-  {
-    title: "Server",
-    key: "server",
-    dataIndex: "server",
-  },
-  {
-    title: "Client",
-    key: "client",
-    dataIndex: "client",
+    title: "Status",
+    key: "status",
   },
   {
     title: "Configurations",
@@ -47,8 +59,32 @@ instrumentStore.fetchInstruments();
 const fetching = computed(() => instrumentStore.isFetching);
 
 const openConfig = (instrumet: IInstrument) => {
-  setInstrument(toRaw(instrumet))
-}
+  setInstrument(toRaw(instrumet));
+};
+
+const startConnection = async (instrument: IInstrument) => {
+  await useFetch(`${BACKEND_API}/instrument/${instrument.id}/connect`, {
+    method: "POST",
+  });
+};
+
+const endConnection = async (instrument: IInstrument) => {
+  await useFetch(`${BACKEND_API}/instrument/${instrument.id}/disconnect`, {
+    method: "POST",
+  });
+};
+
+const confirmDelete = async (instrument: IInstrument) => {
+  await useFetch(`${BACKEND_API}/instrument/${instrument.id}`, {
+    method: "DELETE",
+  }).then(res => instrumentStore.remove(instrument.id!));
+};
+
+const canConnect = (instrument: IInstrument) =>
+  !instrument.connected && !instrument.connecting;
+
+const canDisConnect = (instrument: IInstrument) =>
+  instrument.connected || instrument.connecting;
 </script>
 
 <template>
@@ -56,7 +92,11 @@ const openConfig = (instrumet: IInstrument) => {
     >Add Instrument</a-button
   >
 
-  <a-table :columns="columns" :data-source="instrumentStore.instruments" :loading="fetching">
+  <a-table
+    :columns="columns"
+    :data-source="instrumentStore.instruments"
+    :loading="fetching"
+  >
     <template #headerCell="{ column }">
       <template v-if="column.key === 'name'">
         <span>
@@ -67,49 +107,49 @@ const openConfig = (instrumet: IInstrument) => {
     </template>
 
     <template #bodyCell="{ column, record }">
-      <template v-if="column.key === 'protocol'">
+
+      <template v-if="column.key === 'summary'">
+        <a-tag :color="record.connectionType === 'tcpip' ? 'geekblue' : 'green'">
+          {{ record.connectionType?.toUpperCase() }}
+        </a-tag>
+        <span v-if="record.connectionType === 'tcpip'">
+          <a-tag v-show="record.isClient" color="green"> CLIENT </a-tag>
+          <a-tag v-show="!record.isClient" color="blue"> SERVER </a-tag>
+        </span>
         <a-tag :color="record.protocol === 'hl7' ? 'geekblue' : 'green'">
           {{ record.protocol?.toUpperCase() }}
         </a-tag>
       </template>
-      <template v-else-if="column.key === 'connectionType'">
-        <a-tag :color="record.connectionType === 'tcpip' ? 'geekblue' : 'green'">
-          {{ record.connectionType?.toUpperCase() }}
-        </a-tag>
-      </template>
-      <template v-else-if="column.key === 'server'">
+
+      <template v-else-if="column.key === 'status'">
         <div class="flex justify-start gap-x-4 items-center">
-          <check-outlined v-show="record.server" />
-          <close-outlined v-show="!record.server"/>
-          <sync-outlined  class="animate-spin" />
+          <question-outlined
+            v-show="!record.connected && !record.connecting"
+            class="animate-bounce"
+          />
+          <loading-outlined v-show="record.connecting" />
+          <thunderbolt-outlined v-show="record.connected" class="animate-pulse" />
         </div>
       </template>
-      <template v-else-if="column.key === 'client'">
-        <div class="flex justify-start gap-x-4 items-center">
-          <check-outlined v-show="record.client" />
-          <close-outlined v-show="!record.client"/>
-          <question-outlined  class="animate-bounce" />
-        </div>
-      </template>
-      <template v-else-if="column.key === 'mode'">
-        <span>
-          <a-tag v-show="record.client" color="green">
-            CLIENT
-          </a-tag>
-          <a-tag v-show="record.server" color="blue">
-            SERVER
-          </a-tag>
-        </span>
-      </template>
+
       <template v-else-if="column.key === 'action'">
-        <span>
+        <div class="flex justify-start gap-x-4 items-center">
           <a @click="openConfig(record)">Open</a>
-        </span>
+          <a @click="startConnection(record)" v-show="canConnect(record)">Connect</a>
+          <a @click="endConnection(record)" v-show="canDisConnect(record)">Disconnect</a>
+          <a-popconfirm
+          title="Are you sure delete this Instrument?"
+          ok-text="Yes"
+          cancel-text="No"
+          @confirm="confirmDelete(record)"
+        >
+          <a href="#">Delete</a>
+        </a-popconfirm>
+        </div>
       </template>
+
     </template>
   </a-table>
 
   <instrument-form></instrument-form>
 </template>
-
-

@@ -7,6 +7,8 @@ import { AppInitService } from './providers/initiliser';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Instrument } from './resources/instrument/entities/instrument.entity';
 import config from 'ormconfig';
+import { ResultOrder } from './resources/result-order/entities/result-order.entity';
+import { ResultRaw } from './resources/result-order/entities/result_raw.entity';
 
 @Module({
   imports: [
@@ -21,7 +23,7 @@ import config from 'ormconfig';
         database: `${process.env.POSTGRES_DATABASE_NAME}`,
       },
       synchronize: true,
-      entities: [Instrument],
+      entities: [Instrument, ResultOrder, ResultRaw],
     }),
     ...RESOURCE_MODULES,
   ],

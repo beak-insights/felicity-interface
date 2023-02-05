@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('instrument')
 export class Instrument {
@@ -15,19 +15,19 @@ export class Instrument {
   protocol: string;
 
   @Column({ nullable: true })
-  client: boolean;
+  isClient: boolean;
 
   @Column({ nullable: true })
-  clientPort: number;
+  port: number;
 
   @Column({ nullable: true })
-  clientHost: string;
+  host: string;
 
   @Column({ nullable: true })
-  server: boolean;
+  path: string;
 
   @Column({ nullable: true })
-  serverPort: number;
+  baudRate: number;
 
   @Column({ nullable: true })
   autoReconnect: boolean;

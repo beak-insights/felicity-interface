@@ -16,20 +16,40 @@ export const useInstrumentStore = defineStore('instrument', {
         await useFetch<IInstrument[]>(
             `${BACKEND_API}/instrument`
         ).then((results) => {
-            this.instruments = results.data.value ?? [];
+            this.instruments = (results.data.value ?? []).map(instrument => ({
+                ...instrument, 
+                connecting: false,
+                connected: false,
+                message: "disconnected",
+            }));
         }).finally(() => (this.fetching = false));
       },
 
       async addOrUpdate(instrument: IInstrument) {
-        if(!instrument) {
+        if(!instrument || !instrument.id) {
             return;
+        }
+        instrument = {
+            connecting: false,
+            connected: false,
+            message: "disconnected",
+            ...instrument, 
         }
         const index = this.instruments.findIndex(inst => inst.id === instrument.id);
         if(index > -1) {
-            this.instruments[index] = { ...instrument }
+            this.instruments[index] = { ...this.instruments[index], ...instrument }
         } else {
             this.instruments = [instrument, ...this.instruments]
         }
+      },
+
+      async remove(id:string) {
+        const index = this.instruments.findIndex(inst => inst.id === id);
+        if(index > -1) {
+            this.instruments.splice(index, 1)
+            this.instruments = [...this.instruments]
+        } 
       }
+
     },
 })

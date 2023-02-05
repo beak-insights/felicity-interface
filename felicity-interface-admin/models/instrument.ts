@@ -3,11 +3,14 @@ export interface IInstrument {
     name: string;
     code?: string;
     protocol?: string;
-    client?: boolean;
-    clientPort?: number;
-    clientHost?: string;
-    server?: boolean;
-    serverPort?: number;
+    isClient?: boolean;
+    port?: number;
+    host?: string;
+    baudRate?: number;
+    path?: string;
+    connecting?: boolean;
+    connected?: boolean;
+    message?: string;
     autoReconnect?: boolean;
     connectionType?: string;
   }

@@ -16,23 +16,23 @@ export class CreateInstrumentDto {
 
   @ApiProperty()
   @IsBoolean()
-  client: boolean;
+  isClient: boolean;
 
   @ApiProperty()
   @IsNumber()
-  clientPort: number;
+  port: number;
 
   @ApiProperty()
   @IsString()
-  clientHost: string;
+  host: string;
 
   @ApiProperty()
-  @IsBoolean()
-  server: boolean;
+  @IsString()
+  path: string;
 
   @ApiProperty()
   @IsNumber()
-  serverPort: number;
+  baudRate: number;
 
   @ApiProperty()
   @IsBoolean()

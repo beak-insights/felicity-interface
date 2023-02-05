@@ -18,30 +18,46 @@ export class InstrumentController {
   constructor(private readonly instrumentService: InstrumentService) {}
 
   @Post()
-  create(@Body() createInstrumentDto: CreateInstrumentDto) {
-    return this.instrumentService.create(createInstrumentDto);
+  async create(@Body() createInstrumentDto: CreateInstrumentDto) {
+    return await this.instrumentService.create(createInstrumentDto);
   }
 
   @Get()
-  findAll() {
-    return this.instrumentService.findAll();
+  async findAll() {
+    return await this.instrumentService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.instrumentService.findOne(id);
+  async findOne(@Param('id') id: string) {
+    return await this.instrumentService.findOne(id);
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Param('id') id: string,
     @Body() updateInstrumentDto: UpdateInstrumentDto,
   ) {
-    return this.instrumentService.update(id, updateInstrumentDto);
+    return await this.instrumentService.update(id, updateInstrumentDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.instrumentService.delete(id);
+  async remove(@Param('id') id: string) {
+    return await this.instrumentService.delete(id);
+  }
+
+  @Post(':id/connect')
+  addConnection(@Param('id') id: string) {
+    this.instrumentService.addConnection(id);
+    return {
+      message: 'Adding connection',
+    };
+  }
+
+  @Post(':id/disconnect')
+  removeConnection(@Param('id') id: string) {
+    this.instrumentService.removeConnection(id);
+    return {
+      message: 'Removing connection',
+    };
   }
 }

@@ -1,0 +1,233 @@
+https://freeonlineformatter.com/full
+
+
+H|\^&|||m2000^8.1.9.0^275022122^H1P1O1R1C1L1|||||||P|1|20230203084540
+P|1
+O|1|BP23-07117|BP23-07117^WS23-8835^G1|^^^HIV0.6ml^HIV0.6ml|||||||||||||||||||||F
+R|1|^^^HIV0.6ml^HIV0.6ml^531516^10003220^^F|Not detected|Copies / mL||||R||Admire Bgwirire^Admire Bgwirire||20230202221115|275022122
+R|2|^^^HIV0.6ml^HIV0.6ml^531516^10003220^^I|Target not detected|||||R||Admire Bgwirire^Admire Bgwirire||20230202221115|275022122
+R|3|^^^HIV0.6ml^HIV0.6ml^531516^10003220^^P|-1.00|cycle number||||R||Admire Bgwirire^Admire Bgwirire||20230202221115|275022122
+L|1
+
+H|\^&|||m2000^8.1.9.0^275022122^H1P1O1R1C1L1|||||||P|1|20230203084540
+P|1
+O|1|BP23-07118|BP23-07118^WS23-8835^H1|^^^HIV0.6ml^HIV0.6ml|||||||||||||||||||||F
+R|1|^^^HIV0.6ml^HIV0.6ml^531516^10003220^^F|Not detected|Copies / mL||||R||Admire Bgwirire^Admire Bgwirire||20230202221115|275022122
+R|2|^^^HIV0.6ml^HIV0.6ml^531516^10003220^^I|Target not detected|||||R||Admire Bgwirire^Admire Bgwirire||20230202221115|275022122
+R|3|^^^HIV0.6ml^HIV0.6ml^531516^10003220^^P|-1.00|cycle number||||R||Admire Bgwirire^Admire Bgwirire||20230202221115|275022122
+L|1
+
+H|\^&|||m2000^8.1.9.0^275022122^H1P1O1R1C1L1|||||||P|1|20230203084540
+P|1
+O|1|BP23-07119|BP23-07119^WS23-8835^A2|^^^HIV0.6ml^HIV0.6ml|||||||||||||||||||||F
+R|1|^^^HIV0.6ml^HIV0.6ml^531516^10003220^^F|Not detected|Copies / mL||||R||Admire Bgwirire^Admire Bgwirire||20230202221115|275022122
+R|2|^^^HIV0.6ml^HIV0.6ml^531516^10003220^^I|Target not detected|||||R||Admire Bgwirire^Admire Bgwirire||20230202221115|275022122
+R|3|^^^HIV0.6ml^HIV0.6ml^531516^10003220^^P|-1.00|cycle number||||R||Admire Bgwirire^Admire Bgwirire||20230202221115|275022122
+L|1
+
+H|\^&|||m2000^8.1.9.0^275022122^H1P1O1R1C1L1|||||||P|1|20230203084540
+P|1
+O|1|BP23-07120|BP23-07120^WS23-8835^B2|^^^HIV0.6ml^HIV0.6ml|||||||||||||||||||||F
+R|1|^^^HIV0.6ml^HIV0.6ml^531516^10003220^^F|96|Copies / mL||||R||Admire Bgwirire^Admire Bgwirire||20230202221115|275022122
+R|2|^^^HIV0.6ml^HIV0.6ml^531516^10003220^^P|27.88|cycle number||||R||Admire Bgwirire^Admire Bgwirire||20230202221115|275022122
+L|1
+
+H|\^&|||m2000^8.1.9.0^275022122^H1P1O1R1C1L1|||||||P|1|20230203085249
+P|1
+O|1|BP23-06554|BP23-06554^WS23-8835^F2|^^^HIV0.6ml^HIV0.6ml|||||||||||||||||||||F
+R|1|^^^HIV0.6ml^HIV0.6ml^531516^10003220^^F|90,410|Copies / mL||||R||Admire Bgwirire^Admire Bgwirire||20230202221115|275022122
+R|2|^^^HIV0.6ml^HIV0.6ml^531516^10003220^^P|17.47|cycle number||||R||Admire Bgwirire^Admire Bgwirire||20230202221115|275022122
+L|1
+
+H|\^&|||m2000^8.1.9.0^275022122^H1P1O1R1C1L1|||||||P|1|20230203085249
+P|1
+O|1|BP23-06570|BP23-06570^WS23-8835^G2|^^^HIV0.6ml^HIV0.6ml|||||||||||||||||||||F
+R|1|^^^HIV0.6ml^HIV0.6ml^531516^10003220^^F|53,779|Copies / mL||||R||Admire Bgwirire^Admire Bgwirire||20230202221115|275022122
+R|2|^^^HIV0.6ml^HIV0.6ml^531516^10003220^^P|18.26|cycle number||||R||Admire Bgwirire^Admire Bgwirire||20230202221115|275022122
+L|1
+
+H|\^&|||m2000^8.1.9.0^275022122^H1P1O1R1C1L1|||||||P|1|20230203085249
+P|1
+O|1|BP23-07367|BP23-07367^WS23-8835^H2|^^^HIV0.6ml^HIV0.6ml|||||||||||||||||||||F
+R|1|^^^HIV0.6ml^HIV0.6ml^531516^10003220^^F|86|Copies / mL||||R||Admire Bgwirire^Admire Bgwirire||20230202221115|275022122
+R|2|^^^HIV0.6ml^HIV0.6ml^531516^10003220^^P|28.05|cycle number||||R||Admire Bgwirire^Admire Bgwirire||20230202221115|275022122
+L|1
+
+
+
+            Message Header Record
+      ***************************************
+               Record type - H
+                Delimiters - \^&
+      Message Control ID - 
+         Access password - 
+       Sender name or ID - Sub-fields bellow
+      ---------------------------------------
+             System name - m2000
+        Software version - 8.1.9.0
+         Uniface version - 275022122
+      ---------------------------------------
+          Sender Address - 
+                Reserved - 
+        Sender telephone - 
+Characteristics of sender - 
+             Receiver ID - Sub-fields bellow
+      ---------------------------------------
+                Hostname - 
+              IP address - 
+      ---------------------------------------
+                 Comment - 
+             Processing ID - P
+            Version number - 1
+             Date and time - 20230203085249
+
+                   Patient Record
+      ***************************************
+               Record type - P
+           Sequence number - 1
+
+                Test Order Record
+      ***************************************
+               Record type - O
+           Sequence number - 1
+       Specimen ID field - Sub-fields bellow
+      ---------------------------------------
+             Specimen ID - BP23-06570
+               Tube type - 
+                 Rack ID - 
+           Rack position - 
+                 Tray ID - 
+      ---------------------------------------
+                  ID field - BP23-06570^WS23-8835^G2
+       Universal test ID - Sub-fields bellow
+      ---------------------------------------
+              Identifier - 
+                    Name - 
+                    Type - 
+                    Test - HIV0.6ml
+           LIS method ID - HIV0.6ml
+     Instrument dilution - 
+          Supress reflex - 
+             Reflex name - 
+              Replicates - 
+      ---------------------------------------
+                Priority - 
+     Requested date/time - 
+Collection Date and Time - 
+     Collection end time - 
+       Collection volume - 
+            Collector ID - 
+             Action code - 
+             Danger code - 
+Relevant clinical information - 
+Date/time specimen received - 
+     Specimen descriptor - 
+      Ordering physician - Sub-fields bellow
+      ---------------------------------------
+                    Code - 
+                    Name - 
+           Shortcut code - 
+      ---------------------------------------
+       Physician's phone - 
+        User field no. 1 - Sub-fields bellow
+      ---------------------------------------
+          Address Line 1 - 
+          Address Line 2 - 
+          Address Line 3 - 
+          Address Line 4 - 
+          Address Line 5 - 
+                 Comment - 
+          Reflex testing - 
+      ---------------------------------------
+        User field no. 2 - 
+         Lab field no. 1 - 
+         Lab field no. 2 - 
+      Date/time reported - 
+       Instrument charge - 
+   Instrument section ID - 
+              Report types - F
+
+                    Result Record
+      ***************************************
+               Record type - R
+           Sequence number - 1
+       Universal test ID - Sub-fields bellow
+      ---------------------------------------
+              Identifier - 
+                    Name - 
+                    Type - 
+                    Test - HIV0.6ml
+           LIS method ID - HIV0.6ml
+     Instrument dilution - 531516
+      ---------------------------------------
+       Data/measurem ent - Sub-fields bellow
+      ---------------------------------------
+           Concentration - 53,779
+                   Class - 
+                 Cut-off - 
+               Cut-off 2 - 
+                Quotient - 
+           Sensitization - 
+            ClinRelation - 
+               CommentID - 
+             Lot Numbers - 
+      ---------------------------------------
+                     Units - Copies / mL
+        Reference ranges - 
+    Result abnormal flag - 
+   Nature of abnormality - 
+           Result status - Sub-fields bellow
+      ---------------------------------------
+           Result status - R
+          Pending Status - 
+      ---------------------------------------
+Date if change in instrument - 
+               Operator ID - Admire Bgwirire^Admire Bgwirire
+  Date/time test started - 
+  Date/time test completed - 20230202221115
+             Instrument ID - 275022122
+
+                    Result Record
+      ***************************************
+               Record type - R
+           Sequence number - 2
+       Universal test ID - Sub-fields bellow
+      ---------------------------------------
+              Identifier - 
+                    Name - 
+                    Type - 
+                    Test - HIV0.6ml
+           LIS method ID - HIV0.6ml
+     Instrument dilution - 531516
+      ---------------------------------------
+       Data/measurem ent - Sub-fields bellow
+      ---------------------------------------
+           Concentration - 18.26
+                   Class - 
+                 Cut-off - 
+               Cut-off 2 - 
+                Quotient - 
+           Sensitization - 
+            ClinRelation - 
+               CommentID - 
+             Lot Numbers - 
+      ---------------------------------------
+                     Units - cycle number
+        Reference ranges - 
+    Result abnormal flag - 
+   Nature of abnormality - 
+           Result status - Sub-fields bellow
+      ---------------------------------------
+           Result status - R
+          Pending Status - 
+      ---------------------------------------
+Date if change in instrument - 
+               Operator ID - Admire Bgwirire^Admire Bgwirire
+  Date/time test started - 
+  Date/time test completed - 20230202221115
+             Instrument ID - 275022122
+
+        Message Terminator Record
+      ***************************************
+               Record type - L
+           Sequence number - 1

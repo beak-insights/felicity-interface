@@ -2,6 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@ant-design/icons-vue': ^6.1.0
+  '@kyvg/vue3-notification': ^2.8.0
   '@nuxt/image': ^0.7.1
   '@nuxtjs/tailwindcss': ^6.3.0
   '@pinia/nuxt': ^0.4.6
@@ -12,6 +13,7 @@ specifiers:
 
 dependencies:
   '@ant-design/icons-vue': 6.1.0
+  '@kyvg/vue3-notification': 2.8.0
   '@nuxt/image': 0.7.1
   '@nuxtjs/tailwindcss': 6.3.0
   '@pinia/nuxt': 0.4.6
@@ -778,6 +780,12 @@ packages:
       path-to-regexp: 6.2.1
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /@kyvg/vue3-notification/2.8.0:
+    resolution: {integrity: sha512-jHa90wSpafIYfYgMHc4WZVkrjxhQdSUFWEJFYR7i4fertev4BYuOh46FRuSYOL8DQdVoP4tH3gdtyEuNuBuUww==}
+    peerDependencies:
+      vue: ^3.0.0
     dev: false
 
   /@mapbox/node-pre-gyp/1.0.10:

@@ -23,7 +23,9 @@ async function bootstrap() {
     process.env.BACKEND_SERVER_PORT || 5000,
     process.env.BACKEND_SERVER_HOST || '0.0.0.0',
   );
-  const appService = app.get(AppInitService);
-  appService.initialize();
+  setTimeout(() => {
+    const appService = app.get(AppInitService);
+    appService.initialize();
+  }, 3000);
 }
 bootstrap();

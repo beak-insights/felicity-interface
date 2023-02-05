@@ -4,17 +4,20 @@ import { InstrumentService } from './instrument.service';
 import { InstrumentController } from './instrument.controller';
 import { InstrumentConnectionService } from './instrument.connection';
 import { InstrumentGateway } from './instrument.gateway';
-import { InstrumentParserService } from './instrument.parser';
+import { InstrumentHandlerService } from './instrument.handler';
 import { Instrument } from './entities/instrument.entity';
+import { AllInclusiveParser } from './parsers';
+import { ResultOrderModule } from '../result-order/result-order.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Instrument])],
+  imports: [TypeOrmModule.forFeature([Instrument]), ResultOrderModule],
   controllers: [InstrumentController],
   providers: [
-    InstrumentService,
-    InstrumentConnectionService,
     InstrumentGateway,
-    InstrumentParserService,
+    InstrumentHandlerService,
+    InstrumentConnectionService,
+    InstrumentService,
+    AllInclusiveParser,
   ],
   exports: [InstrumentConnectionService],
 })

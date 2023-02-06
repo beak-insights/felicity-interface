@@ -1,5 +1,7 @@
+import { BaseASTMParser } from './base';
 import { IMessageParser } from './parser.interface';
 import hl7parser from 'hl7parser';
+import { formatRawDate } from './util';
 
 const abbott = `
 H|\^&|||m2000^8.1.9.0^275022112^H1P1O1R1C1L1|||||||P|1|20190903162134
@@ -10,44 +12,18 @@ R|2|^^^HIV1mlDBS^HIV1.0mlDBS^489932^11790271^^I|Detected|||||R||naralabs^naralab
 R|3|^^^HIV1mlDBS^HIV1.0mlDBS^489932^11790271^^P|28.21|cycle number||||R||naralabs^naralabs||20190902191654|275022112
 `;
 
-export class AbbottM2000ASTMParser implements IMessageParser {
+export class AbbottM2000ASTMParser
+  extends BaseASTMParser
+  implements IMessageParser
+{
   transmission = '';
   instrument = null;
-  field_delimiter: string;
-  repeat_delimiter: string;
-  component_delimiter: string;
-  escape_delimiter: string;
 
   constructor(transmission: string, instrument) {
+    super();
     this.transmission = transmission;
     this.instrument = instrument;
   }
-
-  private get_delimiter = (header_record: string, index: number) =>
-    header_record[index];
-
-  private get_field = (record: string, index: number): string => {
-    const fields = record.split(this.field_delimiter);
-    return fields[index];
-  };
-
-  private get_component = (field: string, index: number) => {
-    const comps = field.split(this.component_delimiter);
-    return comps[index];
-  };
-
-  private get = (
-    record: string,
-    field_index: number,
-    component_index: number | undefined = undefined,
-  ) => {
-    const field = this.get_field(record, field_index);
-    if (!component_index) return field;
-    return this.get_component(field, component_index);
-  };
-
-  private get_record_for = (dataLines: string[], key: string): string[] =>
-    dataLines.filter((dl) => dl.indexOf(key) === 0);
 
   private header_data = (record: string) => {
     const sender_info = this.get_field(record, 4);
@@ -265,8 +241,9 @@ export class AbbottAlinityMHL7Parser implements IMessageParser {
     spm.forEach(function (singleSpm) {
       const singleObx = obx[0]; // there are twice as many OBX .. so we take the even number - 1 OBX for each SPM
       const resultOutcome = singleObx.get('OBX.5.1').toString();
+
       const order: any = {};
-      order.raw_text = this.transmission;
+
       order.order_id = singleSpm.get('SPM.3').toString().replace('&ROCHE', '');
       order.test_id = singleSpm.get('SPM.3').toString().replace('&ROCHE', '');
 
@@ -304,22 +281,38 @@ export class AbbottAlinityMHL7Parser implements IMessageParser {
       order.tested_by = singleObx.get('OBX.16').toString();
       order.result_status = 1;
       order.lims_sync_status = 0;
-      order.analysed_date_time = this.formatRawDate(
+      order.analysed_date_time = formatRawDate(
         singleObx.get('OBX.19').toString(),
       );
-      //order.specimen_date_time = this.formatRawDate(message.get('OBX').get(0).get('OBX.19').toString());
-      order.authorised_date_time = this.formatRawDate(
+      order.authorised_date_time = formatRawDate(
         singleObx.get('OBX.19').toString(),
       );
-      order.result_accepted_date_time = this.formatRawDate(
+      order.result_accepted_date_time = formatRawDate(
         singleObx.get('OBX.19').toString(),
       );
-      order.test_location = this.appSettings.labName;
-      order.machine_used = this.appSettings.analyzerMachineName;
+      order.test_location = '';
+      order.machine_used = '';
 
-      if (order.results) {
-        final.push(order);
-      }
+      // as CreateResultOrderDto
+      const _read = () => {
+        return {
+          order_id: order.order_id,
+          test_id: order.test_id,
+          keyword: order.test_type,
+          result: order.results,
+          result_date: order.analysed_date_time,
+          unit: order.test_unit,
+          comment: '',
+          is_sync_allowed: true,
+          synced: false,
+          sync_date: '',
+          sync_comment: '',
+          result_raw: this.transmission,
+          instrument: this.instrument,
+        };
+      };
+
+      final.push(_read());
     });
 
     return final;

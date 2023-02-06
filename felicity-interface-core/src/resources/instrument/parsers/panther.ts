@@ -1,3 +1,4 @@
+import { BaseASTMParser } from './base';
 import { IMessageParser } from './parser.interface';
 
 const panther = `
@@ -23,44 +24,18 @@ R|4|^^^qHIV-1^HIV-1LogBase10^^1|1.77|||||F||||20190808052856
 P|4||||^^|||||||||||^|^|||||||||||||||^|^|
 `;
 
-export class PantherASTMParser implements IMessageParser {
+export class PantherASTMParser
+  extends BaseASTMParser
+  implements IMessageParser
+{
   transmission = '';
   instrument = null;
-  field_delimiter: string;
-  repeat_delimiter: string;
-  component_delimiter: string;
-  escape_delimiter: string;
 
   constructor(transmission: string, instrument) {
+    super();
     this.transmission = transmission;
     this.instrument = instrument;
   }
-
-  private get_delimiter = (header_record: string, index: number) =>
-    header_record[index];
-
-  private get_field = (record: string, index: number): string => {
-    const fields = record.split(this.field_delimiter);
-    return fields[index];
-  };
-
-  private get_component = (field: string, index: number) => {
-    const comps = field.split(this.component_delimiter);
-    return comps[index];
-  };
-
-  private get = (
-    record: string,
-    field_index: number,
-    component_index: number | undefined = undefined,
-  ) => {
-    const field = this.get_field(record, field_index);
-    if (!component_index) return field;
-    return this.get_component(field, component_index);
-  };
-
-  private get_record_for = (dataLines: string[], key: string): string[] =>
-    dataLines.filter((dl) => dl.indexOf(key) === 0);
 
   private header_data = (record: string) => {
     const sender_info = this.get_field(record, 4);

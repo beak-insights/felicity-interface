@@ -1,46 +1,22 @@
 import { IMessageParser } from './parser.interface';
 import hl7parser from 'hl7parser';
+import { arrayKeyExists, formatRawDate } from './util';
+import { BaseASTMParser } from './base';
 
 const RocheASTMPlusParser_MESSAGE_EXAMPLE = `
 `;
-export class RocheASTMPlusParser implements IMessageParser {
+export class RocheASTMPlusParser
+  extends BaseASTMParser
+  implements IMessageParser
+{
   transmission = '';
   instrument = null;
-  field_delimiter: string;
-  repeat_delimiter: string;
-  component_delimiter: string;
-  escape_delimiter: string;
 
   constructor(transmission: string, instrument) {
+    super();
     this.transmission = transmission;
     this.instrument = instrument;
   }
-
-  private get_delimiter = (header_record: string, index: number) =>
-    header_record[index];
-
-  private get_field = (record: string, index: number): string => {
-    const fields = record.split(this.field_delimiter);
-    return fields[index];
-  };
-
-  private get_component = (field: string, index: number) => {
-    const comps = field.split(this.component_delimiter);
-    return comps[index];
-  };
-
-  private get = (
-    record: string,
-    field_index: number,
-    component_index: number | undefined = undefined,
-  ) => {
-    const field = this.get_field(record, field_index);
-    if (!component_index) return field;
-    return this.get_component(field, component_index);
-  };
-
-  private get_record_for = (dataLines: string[], key: string): string[] =>
-    dataLines.filter((dl) => dl.indexOf(key) === 0);
 
   private header_data = (record: string) => {
     const sender_info = this.get_field(record, 4);
@@ -314,22 +290,38 @@ export class Roche68008800HL7Parser implements IMessageParser {
       order.tested_by = singleObx.get('OBX.16').toString();
       order.result_status = 1;
       order.lims_sync_status = 0;
-      order.analysed_date_time = this.formatRawDate(
+      order.analysed_date_time = formatRawDate(
         singleObx.get('OBX.19').toString(),
       );
-      //order.specimen_date_time = this.formatRawDate(message.get('OBX').get(0).get('OBX.19').toString());
-      order.authorised_date_time = this.formatRawDate(
+      order.authorised_date_time = formatRawDate(
         singleObx.get('OBX.19').toString(),
       );
-      order.result_accepted_date_time = this.formatRawDate(
+      order.result_accepted_date_time = formatRawDate(
         singleObx.get('OBX.19').toString(),
       );
-      order.test_location = this.appSettings.labName;
-      order.machine_used = this.appSettings.analyzerMachineName;
+      order.test_location = '';
+      order.machine_used = '';
 
-      if (order.results) {
-        final.push(order);
-      }
+      // as CreateResultOrderDto
+      const _read = () => {
+        return {
+          order_id: order.order_id,
+          test_id: order.test_id,
+          keyword: order.test_type,
+          result: order.results,
+          result_date: order.analysed_date_time,
+          unit: order.test_unit,
+          comment: '',
+          is_sync_allowed: true,
+          synced: false,
+          sync_date: '',
+          sync_comment: '',
+          result_raw: this.transmission,
+          instrument: this.instrument,
+        };
+      };
+
+      final.push(_read());
     });
 
     return final;
@@ -378,7 +370,6 @@ export class RocheElecsysASTMParser implements IMessageParser {
           dataArray === undefined ||
           dataArray['R'] === undefined
         ) {
-          this.logger('info', 'dataArray blank');
           return;
         }
 
@@ -386,21 +377,21 @@ export class RocheElecsysASTMParser implements IMessageParser {
 
         try {
           if (
-            this.arrayKeyExists('R', dataArray) &&
+            arrayKeyExists('R', dataArray) &&
             typeof dataArray['R'] == 'string'
           ) {
             dataArray['R'] = dataArray['R'].split(',');
           }
 
           if (
-            this.arrayKeyExists('O', dataArray) &&
+            arrayKeyExists('O', dataArray) &&
             typeof dataArray['O'] == 'string'
           ) {
             dataArray['O'] = dataArray['O'].split(',');
           }
 
           if (
-            this.arrayKeyExists('C', dataArray) &&
+            arrayKeyExists('C', dataArray) &&
             typeof dataArray['C'] == 'string'
           ) {
             dataArray['C'] = dataArray['C'].split(',');
@@ -416,11 +407,9 @@ export class RocheElecsysASTMParser implements IMessageParser {
               order.test_unit = dataArray['R'][4];
               order.results = dataArray['R'][3];
               order.tested_by = dataArray['R'][10];
-              order.analysed_date_time = this.formatRawDate(dataArray['R'][12]);
-              order.authorised_date_time = this.formatRawDate(
-                dataArray['R'][12],
-              );
-              order.result_accepted_date_time = this.formatRawDate(
+              order.analysed_date_time = formatRawDate(dataArray['R'][12]);
+              order.authorised_date_time = formatRawDate(dataArray['R'][12]);
+              order.result_accepted_date_time = formatRawDate(
                 dataArray['R'][12],
               );
             } else {
@@ -435,12 +424,29 @@ export class RocheElecsysASTMParser implements IMessageParser {
             order.raw_text = partData;
             order.result_status = 1;
             order.lims_sync_status = 0;
-            order.test_location = this.appSettings.labName;
-            order.machine_used = this.appSettings.analyzerMachineName;
+            order.test_location = '';
+            order.machine_used = '';
 
-            if (order.results) {
-              final.push(order);
-            }
+            // as CreateResultOrderDto
+            const _read = () => {
+              return {
+                order_id: order.order_id,
+                test_id: order.test_id,
+                keyword: order.test_type,
+                result: order.results,
+                result_date: order.analysed_date_time,
+                unit: order.test_unit,
+                comment: '',
+                is_sync_allowed: true,
+                synced: false,
+                sync_date: '',
+                sync_comment: '',
+                result_raw: this.transmission,
+                instrument: this.instrument,
+              };
+            };
+
+            final.push(_read());
           }
         } catch (e) {}
       }

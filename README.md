@@ -82,3 +82,14 @@ https://github.com/yaacov/node-modbus-serial
 https://github.com/Cloud-Automation/node-modbus#readme
 
 
+# Docker access host peripherals
+https://stackoverflow.com/questions/62643320/exposing-a-serial-usb-device-to-a-container
+https://stackoverflow.com/questions/24225647/docker-a-way-to-give-access-to-a-host-usb-or-serial-device
+https://www.homeautomationguy.io/docker-tips/accessing-usb-devices-from-docker-containers/
+https://www.w3schools.blog/docker-container-give-usb-access
+
+https://www.howtogeek.com/devops/how-to-connect-to-localhost-within-a-docker-container/#:~:text=Accessing%20the%20Host%20With%20the%20Default%20Bridge%20Mode&text=You%20just%20need%20to%20reference,0.1%20.&text=Your%20host's%20Docker%20IP%20will,services%20running%20on%20your%20host.
+https://docs.docker.com/network/network-tutorial-host/
+https://dev.to/natterstefan/docker-tip-how-to-get-host-s-ip-address-inside-a-docker-container-5anh
+
+

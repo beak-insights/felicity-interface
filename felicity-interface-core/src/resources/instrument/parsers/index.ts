@@ -39,6 +39,7 @@ export class AllInclusiveParser {
     if (parsers.length === 0) {
       return;
     }
+    // return first from available parsers
     return parsers[0];
   }
 }

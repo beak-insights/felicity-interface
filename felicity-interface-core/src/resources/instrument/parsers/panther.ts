@@ -104,6 +104,10 @@ export class PantherASTMParser
   };
 
   public is_supported = (): boolean => {
+    if (this.instrument.protocol !== 'astm') {
+      return false;
+    }
+
     // refactor to use '\nP|' as splitter
     const transmissionLines: string[] = this.transmission
       .split('H|')
@@ -118,9 +122,7 @@ export class PantherASTMParser
     this.component_delimiter = this.get_delimiter(header_record, 3);
     this.escape_delimiter = this.get_delimiter(header_record, 4);
     const header = this.header_data(header_record);
-    return (
-      header['SenderName'] === 'Panther' && this.instrument.protocol === 'astm'
-    );
+    return header['SenderName'] === 'Panther';
   };
 
   public run() {

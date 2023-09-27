@@ -1,5 +1,5 @@
 import { IMessageParser } from './parser.interface';
-import hl7parser from 'hl7parser';
+import * as hl7parser from 'hl7parser';
 import { arrayKeyExists, formatRawDate } from './util';
 import { BaseASTMParser } from './base';
 
@@ -118,6 +118,10 @@ export class RocheASTMPlusParser
   };
 
   public is_supported = (): boolean => {
+    if (this.instrument.protocol !== 'astm') {
+      return false;
+    }
+
     const transmissionLines: string[] = this.transmission
       .split('H|')
       .filter((st) => st != '')
@@ -131,10 +135,7 @@ export class RocheASTMPlusParser
     this.component_delimiter = this.get_delimiter(header_record, 3);
     this.escape_delimiter = this.get_delimiter(header_record, 4);
     const header = this.header_data(header_record);
-    return (
-      header['ProtocolVersion'] === 'Roche ASTM+' &&
-      this.instrument.protocol === 'astm'
-    );
+    return header['ProtocolVersion'] === 'Roche ASTM+';
   };
 
   public run() {
@@ -220,11 +221,11 @@ export class Roche68008800HL7Parser implements IMessageParser {
   }
 
   public is_supported = (): boolean => {
+    if (this.instrument.protocol !== 'hl7') {
+      return false;
+    }
     const message = hl7parser.create(this.transmission);
-    return (
-      message.get('MSH.3').toString() === 'COBAS6800/8800' &&
-      this.instrument.protocol === 'hl7'
-    );
+    return message.get('MSH.3').toString() === 'COBAS6800/8800';
   };
 
   public run() {
@@ -338,7 +339,12 @@ export class RocheElecsysASTMParser implements IMessageParser {
     this.instrument = instrument;
   }
 
-  public is_supported = (): boolean => this.instrument.protocol === 'hl7';
+  public is_supported = (): boolean => {
+    if (this.instrument.protocol !== 'astm') {
+      return false;
+    }
+    return true;
+  };
 
   public run() {
     const fullDataArray = this.transmission.split('##START##');

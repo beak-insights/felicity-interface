@@ -133,6 +133,10 @@ export class AbbottM2000ASTMParser
   };
 
   public is_supported = (): boolean => {
+    if (this.instrument.protocol !== 'astm') {
+      return false;
+    }
+
     const transmissionLines: string[] = this.transmission
       .split('H|')
       .filter((st) => st != '')
@@ -146,9 +150,7 @@ export class AbbottM2000ASTMParser
     this.component_delimiter = this.get_delimiter(header_record, 3);
     this.escape_delimiter = this.get_delimiter(header_record, 4);
     const header = this.header_data(header_record);
-    return (
-      header['SenderName'] === 'm2000' && this.instrument.protocol === 'astm'
-    );
+    return header['SenderName'] === 'm2000';
   };
 
   public run() {
@@ -223,11 +225,11 @@ export class AbbottAlinityMHL7Parser implements IMessageParser {
   }
 
   public is_supported = (): boolean => {
+    if (this.instrument.protocol !== 'hl7') {
+      return false;
+    }
     const message = hl7parser.create(this.transmission);
-    return (
-      message.get('MSH.3').toString() === 'ALINITY' &&
-      this.instrument.protocol === 'hl7'
-    );
+    return message.get('MSH.3').toString() === 'ALINITY';
   };
 
   public run() {

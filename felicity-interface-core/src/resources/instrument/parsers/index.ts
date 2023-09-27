@@ -33,12 +33,14 @@ export class AllInclusiveParser {
   }
 
   get_suitable_parser(transmissionString: string, instrument: Instrument) {
+    console.log(transmissionString, instrument);
     const parsers = PARSERS.map(
       (cl) => new cl(transmissionString, instrument),
-    ).filter((p) => p.is_supported());
+    ).filter((p) => p.is_supported() === true);
     if (parsers.length === 0) {
       return;
     }
+    // return first from available parsers
     return parsers[0];
   }
 }

@@ -60,16 +60,25 @@ export class InstrumentHandlerService {
 
     return ack;
   }
-
+ 
   public socketReader(data: any, instrument, clientSocket) {
-    const instance = this.instrumentConnectionService.getSerialSession(
-      instrument.id,
-    );
+    let instance = null;
+    if (instrument.isClient) {
+      instance = this.instrumentConnectionService.getClientSession(
+        instrument.id,
+      );
+    } else {
+      instance = this.instrumentConnectionService.getServerSession(
+        instrument.id,
+      );
+    }
 
-    let strData = instance['statement'];
+    let strData = instance['statements']; // or statement
 
+    console.log('instrument.protocol: ', instrument.protocol);
     if (instrument.protocol === 'hl7') {
       const hl7Text = this.hex2ascii(data.toString('hex'));
+
       strData += hl7Text;
       //
 
@@ -89,6 +98,7 @@ export class InstrumentHandlerService {
 
         // then parse
         const final = this.parsers.parse(strData, instrument);
+
         if (final.length > 0) {
           this.resultOrderService.createAll(final);
         }

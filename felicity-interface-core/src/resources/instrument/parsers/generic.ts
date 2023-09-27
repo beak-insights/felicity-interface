@@ -12,7 +12,12 @@ export class GenericHL7Parser implements IMessageParser {
     this.instrument = instrument;
   }
 
-  public is_supported = (): boolean => this.instrument.protocol === 'hl7';
+  public is_supported = (): boolean => {
+    if (this.instrument.protocol !== 'hl7') {
+      return false;
+    }
+    return true;
+  };
 
   public run() {
     const message = hl7parser.create(this.transmission);
@@ -123,7 +128,12 @@ export class ConcatenatedASTMParser implements IMessageParser {
     this.instrument = instrument;
   }
 
-  public is_supported = (): boolean => this.instrument.protocol === 'astm';
+  public is_supported = (): boolean => {
+    if (this.instrument.protocol !== 'astm') {
+      return false;
+    }
+    return true;
+  };
 
   public run() {
     const final: any[] = [];
